@@ -1,0 +1,24 @@
+﻿I'm sorry, but an uncaught exception occurred.
+
+While running game code:
+  File "game/script.rpy", line 84, in script
+    remove nvl_narrator ""
+Exception: Sayer 'remove' is not defined.
+
+-- Full Traceback ------------------------------------------------------------
+
+Full traceback:
+  File "game/script.rpy", line 84, in script
+    remove nvl_narrator ""
+  File "D:\Dani\Projects\Game Projects\Renpy\renpy\ast.py", line 2557, in execute
+    Say.execute(self)
+  File "D:\Dani\Projects\Game Projects\Renpy\renpy\ast.py", line 575, in execute
+    who = eval_who(self.who, self.who_fast)
+  File "D:\Dani\Projects\Game Projects\Renpy\renpy\ast.py", line 464, in eval_who
+    raise Exception("Sayer '%s' is not defined." % who)
+Exception: Sayer 'remove' is not defined.
+
+Windows-10-10.0.26100 AMD64
+Ren'Py 8.2.0.24012702
+yet another phone 1.0
+Wed Feb 26 17:32:18 2025
