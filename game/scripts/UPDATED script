@@ -1,0 +1,283 @@
+# Define Characters
+define adam = Character("Adam", color="#ffffff")
+define eve = Character("Eve", color="#ff99cc")
+define narrator = Character(None)  # Corrected line
+
+# Define Transitions
+define slow_dissolve = Dissolve(1.0)  # Define slow_dissolve transition
+define flash = Fade(0.1, 0.1, 0.1)  # Define flash transition as a quick fade
+define shake = MoveIn("left", 0.1, 10)  # Define shake transition
+
+# Define Images
+image bg apartment_day = "apartment_day.jpg"
+image bg apartment_night = "apartment_night.jpg"
+image bg dream = "dream_blur.jpg"
+image bg research = "laptop_screen.jpg"
+image david_shadow = "david_shadow.png"
+image david_rocking = "david_rocking_chair.png"
+image phone_ui = "phone_ui.jpg"
+image twitter_ui = "twitter_ui.jpg"
+image text_message = "text_message.png"
+
+# Sound Effects
+define sfx_creak = "creak.ogg"
+define sfx_whisper = "whisper.ogg"
+define sfx_phonebuzz = "phone_buzz.ogg"
+define sfx_static = "static.ogg"
+
+# Game Start
+label start:
+    scene bg apartment_day with fade
+    "I finally moved into my new apartment."
+    "It's nothing fancy, but it's mine."
+
+    # First Choice: Initial Feeling
+    menu:
+        "Something feels... off.":
+            $ feeling_weird = True
+            "For some reason, I can't shake off this weird feeling. Like I'm being watched."
+        "Everything seems fine.":
+            $ feeling_weird = False
+            "It's just a new place. Nothing to worry about."
+
+    # Adam texts Eve
+    scene phone_ui with fade
+    eve "Hey! How's the new place?"
+    menu:
+        "Tell her it's fine":
+            adam "It's fine! Just settling in."
+            eve "Good! Can't wait to visit!"
+        "Tell her it feels weird":
+            adam "Idk... place feels kinda weird."
+            eve "Weird how? Ghosts?? lol"
+            adam "Nah just... weird vibes."
+            eve "You'll get used to it. If anything happens, call me!"
+
+    jump first_night  # Ensure this jump is correctly placed
+
+# NIGHTTIME SCENE
+label first_night:
+    scene bg apartment_night with fade
+    "My first night here."
+    "I'm about to head out to grab food when—"
+
+    play sound sfx_creak
+    "I hear something. A faint creaking noise."
+
+    menu:
+        "Turn back and investigate":
+            jump investigate_noise
+        "Ignore it and leave":
+            "I shake it off. Just the apartment settling."
+            "But something about it makes my skin crawl."
+            jump continue_night
+
+label investigate_noise:
+    "I turn back, scanning the apartment."
+    scene bg apartment_night
+    "Nothing. Just silence."
+
+    "Then—"
+    scene david_shadow with shake
+    play sound sfx_whisper
+    "A shadow. Small. Standing in the hallway."
+
+    menu:
+        "Stare at it":
+            "I freeze. My breath catches in my throat."
+            "It doesn't move. Just watches me."
+        "Blink":
+            "I blink and—it's gone."
+
+    scene bg apartment_night
+    "What... was that?"
+
+    # Twitter Post Mechanic
+    scene twitter_ui with fade
+    menu:
+        "Post about it":
+            "I open Twitter and type:"
+            "\"Weird, I think I saw something in my apartment. #NewPlaceVibes\""
+        "Ignore it":
+            "I shake my head. Maybe I'm just tired."
+
+    jump continue_night
+
+label continue_night:
+    "I force myself to forget it and go to bed."
+    "But sleep... doesn't come easy."
+
+    jump first_dream
+
+# DREAM SEQUENCE
+label first_dream:
+    scene bg dream with dissolve
+    "I'm dreaming."
+    "A child stands in the dark. His head... looks strange."
+    "I can't see his face, but I know his name."
+
+    menu:
+        "Say something":
+            adam "Who are you?"
+            "No response."
+        "Stay silent":
+            "I just stare. He stares back."
+
+    "I wake up suddenly."
+    "What kind of dream was that?"
+
+    jump next_day
+
+# NEXT DAY
+label next_day:
+    scene bg apartment_day with fade
+    "The next morning, I wake up feeling uneasy."
+    # Eve Texts Again
+    scene phone_ui with fade
+    eve "Morning! Sleep okay?"
+    menu:
+        "Tell her about the dream":
+            adam "I had a weird dream. A kid was just... staring at me."
+            eve "Creepy! Maybe you were just stressed?"
+        "Say it was fine":
+            adam "Yeah, all good."
+            eve "Cool! Hope you're settling in."
+
+    "I try to shake it off, but I can’t."
+
+    jump escalation
+
+# ESCALATION SCENE
+label escalation:
+    "Days pass. The weirdness gets worse."
+    "Objects move. The rocking chair sways when I'm not looking."
+    "I can't stay here anymore. Every night, it gets worse."
+    "Shadows in the corners. Whispers that don’t belong to me."
+    "David is here. And he’s waiting for me."
+
+    menu:
+        "Tell Eve everything":
+            jump good_ending
+        "Stay and confront David":
+            jump bad_ending
+
+# GOOD ENDING: ESCAPE... OR IS IT?
+label good_ending:
+    "I grab my phone and text Eve."
+
+    scene phone_ui with fade
+    eve "Adam, please just leave. Come to my place."
+    "I don't hesitate. I grab my keys and rush out the door."
+
+    scene bg apartment_hallway with shake
+    "As I step into the hallway, the lights flicker violently."
+    "The air is heavy, thick like something is pressing against my chest."
+
+    "Then, I hear it—"
+    play sound sfx_whisper
+    "A voice. Right in my ear."
+    "\"Don’t go.\""
+
+    menu:
+        "Run without looking back":
+            "I don’t stop."
+            "My body moves on instinct, barreling down the stairs as fast as I can."
+        "Glance back":
+            "I turn my head—just for a second."
+            "And I see him."
+            scene david_shadow with shake
+            "David. Standing at the end of the hall, his head tilted unnaturally."
+            "His body twitches, limbs jerking as if controlled by invisible strings."
+            "His mouth opens—too wide. And then—"
+
+    "I reach the lobby, gasping for breath."
+    "The moment I step outside—"
+    scene bg outside_night with fade
+    "The suffocating pressure is gone. The night air is crisp, real."
+    scene phone_ui with fade
+    eve "Adam?? Did you make it out?"
+    "I look back at my apartment building."
+    "For a brief second—too fast to be real—I see the silhouette of a child in my window."
+    "Watching me."
+
+    "I don’t respond. I just keep walking."
+    return "good_ending"
+
+# BAD ENDING: THE THIRD QUESTION
+label bad_ending:
+    "No. I need answers."
+    "I sit in the chair, heart hammering."
+    scene david_rocking with slow_dissolve
+    "The rocking chair sways, moving on its own."
+    "David is there. Waiting."
+
+    "A voice whispers in my mind: \"You can ask two questions. Never a third.\""
+
+    menu:
+        "Who are you?" if not persistent.first_question:
+            $ persistent.first_question = "Who are you?"
+            adam "Who are you?"
+            "The room trembles."
+            "\"David.\""
+            jump bad_ending
+
+        "How did you die?" if not persistent.second_question:
+            $ persistent.second_question = "How did you die?"
+            adam "How did you die?"
+            "His voice is distant."
+            "\"A shelf fell on me... in a store...\""
+            jump bad_ending
+
+        "What do you want from me?" if persistent.first_question and persistent.second_question:
+            adam "What do you—"
+            scene static with flash  # This line uses the flash transition
+            play sound sfx_static
+            "The world distorts."
+            "Pain sears through my head. My body locks in place."
+            "I can’t breathe."
+
+    scene bg void with shake  # This line uses the shake transition
+    "The apartment dissolves. I am nowhere."
+    "David stands in front of me, closer now."
+    "His head twitches. Cracks splinter through his skin like broken porcelain."
+
+    scene david_closeup with flash
+    play sound sfx_whisper
+    "He leans in. Too close."
+    "His voice is inside my skull now, thick like syrup."
+    "\"You shouldn't have asked that.\""
+
+    scene black with dissolve
+    "Everything turns black."
+
+    "And then—"
+
+    scene bg apartment_day with fade
+    "I wake up in my chair."
+    "Morning sunlight streams through the window."
+    menu:
+        "Check phone":
+            scene phone_ui
+            "I check my messages."
+            "Nothing. No missed calls. No texts from Eve."
+            "No record of me ever texting her at all."
+        "Look around":
+            "The apartment is... different."
+            "The walls are a shade darker."
+            "The furniture feels misplaced, slightly off."
+
+    "I stand, heart racing."
+    "Something is wrong."
+
+    scene mirror_reflection with fade
+    "I glance at my reflection."
+    "And I see him."
+    scene david_shadow with shake
+    "David. Staring back at me from inside the mirror."
+    play sound sfx_whisper
+    "He grins."
+
+    scene black with slow_dissolve
+    "And then, I am gone."
+
+    return "bad_ending"
